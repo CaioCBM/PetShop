@@ -36,26 +36,58 @@ public class Main {
 		}
 		
 		if (login == 1) { //MENU COMPLETO
-			System.out.println("");
-			System.out.println("----------------");
-			System.out.println("Menu para AnotheRafael");
-			System.out.println("----------------");
-			System.out.println("Digite 1 para Abrir Menu de Listas");
-			System.out.println("Digite 2 para Abrir Menu de Adições");
-			System.out.println("Digite 3 para Abrir Menu de Exclusão");
-			System.out.println("Digite 4 para Abrir Menu de Alterações");
-			System.out.println("Digite 5 para Sair");			
-			System.out.println("----------------");
-			System.out.println("");
-		} else { //MENU MINIMALIZADO
-			System.out.println("");
-			System.out.println("----------------");
-			System.out.println("Menu para Caiocbm");
-			System.out.println("----------------");
-			System.out.println("Digite 1 para Abrir Menu de Listas");
-			System.out.println("Digite 5 para Sair");			
-			System.out.println("----------------");
-			System.out.println("");
+			while (login == 1) {
+				System.out.println("");
+				System.out.println("----------------");
+				System.out.println("Menu para AnotheRafael");
+				System.out.println("----------------");
+				System.out.println("Digite 1 para Abrir Menu de Impressões");
+				System.out.println("Digite 2 para Abrir Menu de Adições");
+				System.out.println("Digite 3 para Abrir Menu de Exclusão");
+				System.out.println("Digite 4 para Abrir Menu de Alterações");
+				System.out.println("Digite 5 para Sair");			
+				System.out.println("----------------");
+				System.out.println("");
+				
+				int opcao = scan.nextInt();
+
+				System.out.println("");
+				System.out.println("----------------");
+			}
+		} 
+		else { //MENU MINIMALIZADO
+			while (login == 2) {
+				System.out.println("");
+				System.out.println("----------------");
+				System.out.println("Menu para Caiocbm");
+				System.out.println("----------------");
+				System.out.println("Digite 1 para Abrir Menu de Impressões");
+				System.out.println("Digite 5 para Sair");			
+				System.out.println("----------------");
+				System.out.println("");
+				
+				int opcao = scan.nextInt();
+				
+				if (opcao == 1) {
+					//MENU DE IMPRESSÕES
+					/*
+					 * 1. Imprimir Donos
+					 * 1.1. Imprimir Donos Premium = TRUE
+					 * 1.2. imprimir Donos Premium = FALSE
+					 * 
+					 * 2. Imprimir Animais
+					 * 2.1. Imprimir só Gatos
+					 * 2.2. Imprimir só Cachorros
+					 */
+				} else {
+					System.out.println("");
+					System.out.println("----------------");
+					System.out.println("Menu para Caiocbm");
+					System.out.println("----------------");
+					login = 5;
+				}
+						
+			}
 
 		}
 		
