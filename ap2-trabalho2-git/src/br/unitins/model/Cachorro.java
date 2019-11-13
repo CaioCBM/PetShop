@@ -2,6 +2,7 @@ package br.unitins.model;
 
 public class Cachorro extends Animal {
 
+	//CONSTRUTORES
 	public Cachorro (String nome, Sexo sexo, Dono dono) {
 		this.nome = nome;
 		this.sexo = sexo;
@@ -15,6 +16,7 @@ public class Cachorro extends Animal {
 		this.idade = idade;
 	}
 	
+	//OVERRIDES
 	@Override
 	public String toString() {
 		return super.toString() + " - Animal: " + getClass().getSimpleName();

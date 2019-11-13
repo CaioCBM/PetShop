@@ -1,12 +1,12 @@
 package br.unitins.model;
 
 public class Dono {
-
 	private String nome;
 	private String cpf;
 	private String telefone;
 	private Boolean premium;
 	
+	//CONSTRUTORES
 	public Dono (String nome) {
 		this.nome = nome;
 	}
@@ -18,6 +18,7 @@ public class Dono {
 		this.premium = premium;
 	}
 
+	//GET E SET
 	public String getNome() {
 		return nome;
 	}
@@ -31,6 +32,7 @@ public class Dono {
 		return premium;
 	}
 	
+	//OVERRIDE
 	@Override
 	public String toString() {
 		return getNome();

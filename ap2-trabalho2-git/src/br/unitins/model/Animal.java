@@ -1,16 +1,17 @@
 package br.unitins.model;
 
 public abstract class Animal {
-
 	protected String nome;
 	protected Dono dono;
 	protected Sexo sexo;
 	protected Integer idade;
-	
+
+	//CONSTRUTORES
 	public Animal () {
 		
 	}
 	
+	//GET E SET
 	public String getNome() {
 		return nome;
 	}
@@ -24,6 +25,7 @@ public abstract class Animal {
 		return idade;
 	}
 	
+	//OVERRIDE
 	@Override
 	public String toString() {
 		return "[Nome: " + getNome() + ", " + getSexo() + " - " + getDono();
