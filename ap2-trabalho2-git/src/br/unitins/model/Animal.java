@@ -1,6 +1,6 @@
 package br.unitins.model;
 
-public abstract class Animal {
+public abstract class Animal implements Comparable<Animal> {
 	protected String nome;
 	protected Dono dono;
 	protected Sexo sexo;
@@ -17,6 +17,9 @@ public abstract class Animal {
 	}
 	public Dono getDono() {
 		return dono;
+	}
+	public void setSexo(Sexo sexo) {
+		this.sexo = sexo;
 	}
 	public Sexo getSexo() {
 		return sexo;
