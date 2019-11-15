@@ -12,7 +12,8 @@ import br.unitins.model.Gato;
 import br.unitins.model.Sexo;
 
 public class Main {
-	// Inicialização de 2 Usuarios aleatorios
+
+//	USUÁRIOS
 	static final String usuario1 = "Anotherafael";
 	static final String senha1 = "Gabs2";
 	static final String usuario2 = "Caiocbm";
@@ -24,79 +25,73 @@ public class Main {
 
 	public static void main(String[] args) {
 
-//		Inicialização de 2 Donos
-//		Dono dono1 = new Dono("Premius", "032543654-69", "06385954521", true);
-//		Dono dono2 = new Dono("Ney Tam Premium", "021420634-42", "1196664269", false);
-//		
-//		Inicialização de 4 Animais aleatorios
-//		Animal ani1 = new Gato("Rey", dono1, Sexo.FEMEA, 5);
-//		Animal ani2 = new Gato("Luke", dono2, Sexo.MACHO, 12);
-//		Animal ani3 = new Cachorro("RafaCanina", dono2, Sexo.FEMEA, 15);
-//		Animal ani4 = new Cachorro("LittleJohn", dono1, Sexo.MACHO, 6);
+		Animal a1 = new Cachorro("Jonh", new Dono("Rafael"), Sexo.MACHO, 4);
+		Animal a2 = new Cachorro("Amanda", new Dono("Rafael"), Sexo.FEMEA, 2);
+		Animal a3 = new Gato("Nana", new Dono("Lisa"), Sexo.FEMEA, 5);
+		Animal a4 = new Cachorro("Dudu", new Dono("Lisa"), Sexo.MACHO, 1);
+		Animal a5 = new Gato("Suzie", new Dono("Rafael"), Sexo.FEMEA, 2);
 
 		List<Animal> animais = new ArrayList<Animal>();
+		animais.add(a1);
+		animais.add(a2);
+		animais.add(a3);
+		animais.add(a4);
+		animais.add(a5);
 
-		while (!login()) { // Loop de Login
+//		LOGIN
+		while (!login()) {
 		}
 
+//		MENU
 		int opcao = 0;
-		if (login == 1) { // MENU COMPLETO
-			while (opcao != 4) {
+		if (login == 1) {
+
+			while (opcao != 3) {
 				System.out.println("");
-				System.out.println("Menu para AnotheRafael");
+				System.out.println("Menu para Anotherafael");
 				System.out.println("");
 				System.out.println("1 - Menu de Adições");
-				System.out.println("2- Menu de Alterações");
-				System.out.println("3 - Menu de Impressões");
-				System.out.println("4 - Sair");
+				System.out.println("2 - Menu de Impressões");
+				System.out.println("3 - Sair");
 				System.out.print("Escolha: ");
 				opcao = scan.nextInt();
 				System.out.println("");
-				
-				if (opcao == 1) {
+
+				switch (opcao) {
+				case 1:
+
 					System.out.println("1 - Cachorro, 2 - Gato");
 					System.out.print("Escolha: ");
 					int tipo = scan.nextInt();
+					System.out.println("");
 					animais.add(Main.adicionarAnimal(tipo));
-				} else if (opcao == 3) {
+					break;
+
+				case 2:
+
 					Main.imprimirAnimais(animais);
+					break;
+
+				case 3:
+
+					System.out.println("Até mais, Anotherafael.");
+					break;
+
 				}
+
 			}
+
 		} else if (login == 2) {
-			System.out.println("");
-			System.out.println("----------------");
-			System.out.println("Menu para Caiocbm");
-			System.out.println("----------------");
-			System.out.println("Digite 1 para Abrir Menu de Exclusão");
-			System.out.println("Digite 2 para Abrir Menu de Impressões");
-			System.out.println("Digite 3 para Sair");
-			System.out.println("----------------");
-			System.out.println("");
-
-			opcao = scan.nextInt();
-
-			if (opcao == 1) {
-				// MENU DE IMPRESSÕES
-				/*
-				 * 1. Imprimir Donos 1.1. Imprimir Donos Premium = TRUE 1.2. imprimir Donos
-				 * Premium = FALSE
-				 * 
-				 * 2. Imprimir Animais 2.1. Imprimir só Gatos 2.2. Imprimir só Cachorros
-				 */
-			} else {
-				System.out.println("");
-				System.out.println("----------------");
-				System.out.println("Menu para Caiocbm");
-				System.out.println("----------------");
-				login = 5;
-			}
 
 		}
 
 	}
 
-
-	// METODOS
+/**
+ * @author Rafael
+ * 
+ * Método que realiza o login do sistema. 
+ */
 
 	public static Boolean login() {
 		System.out.print("Digite o usuário: ");
@@ -117,40 +112,105 @@ public class Main {
 		return false;
 	}
 
+	/**
+	 * @author Rafael
+	 * 
+	 * Método para criar um Dono a partir do Scanner.
+	 * 
+	 * 1. Evitar que seja registrado número no nome do Dono.
+	 * 2. Limitar a quantidade digitos (12) no cpf.
+	 * 3. Evitar que seja registrado letra no número de telefone.
+	 * 4. Adicionar um método para adicionar premium.
+	 * 
+	 */
+	
 	public static Dono adicionarDono() {
 		Dono dono = new Dono(scan.next());
 		return dono;
 	}
 
+	/**
+	 * @author Rafael
+	 * 
+	 * Método para criar um animal a partir do Scanner.
+	 * 
+	 * 1. Evitar números no nome do animal e do dono.
+	 * 2. Evitar outros valores além de macho e fêmea. (COMPLETO)
+	 * 3. Jogar uma exception quando for instanciar a idade do Animal para caso o usuário digitar algo que não seja um número inteiro.
+	 * 
+	 */
+	
 	public static Animal adicionarAnimal(int tipo) {
 
 		if (tipo == 1) {
 			System.out.println("Nome do animal e do dono");
 			Animal animal = new Cachorro(scan.next(), Main.adicionarDono());
-			System.out.println("Sexo: macho ou femea?");
-			String resposta = scan.next();
-			if (resposta.equals("macho") || resposta.equals("Macho"))
-				animal.setSexo(Sexo.MACHO);
-			else
-				animal.setSexo(Sexo.FEMEA);
+
+			for (int i = 0; i != 1;) {
+
+				System.out.println("Sexo: macho ou fêmea?");
+				String resposta = scan.next();
+
+				if (resposta.equals("macho")) {
+					animal.setSexo(Sexo.MACHO);
+					i = 1;
+				} else if (resposta.equals("fêmea")) {
+					animal.setSexo(Sexo.FEMEA);
+					i = 1;
+				} else {
+					System.out.println("");
+					Main.recado();
+				}
+			}
+
+			System.out.println("");
 			System.out.println("Foi adicionado um cachorro");
 			return animal;
 		} else {
 			System.out.println("Nome do animal e do dono");
 			Animal animal = new Gato(scan.next(), Main.adicionarDono());
-			System.out.println("Sexo: macho ou femea?");
-			String resposta = scan.next();
-			if (resposta.equals("macho") || resposta.equals("Macho"))
-				animal.setSexo(Sexo.MACHO);
-			else
-				animal.setSexo(Sexo.FEMEA);
+
+			for (int i = 0; i != 1;) {
+
+				System.out.println("Sexo: macho ou fêmea?");
+				String resposta = scan.next();
+
+				if (resposta.equals("macho")) {
+					animal.setSexo(Sexo.MACHO);
+					i = 1;
+				} else if (resposta.equals("fêmea")) {
+					animal.setSexo(Sexo.FEMEA);
+					i = 1;
+				} else {
+					System.out.println("");
+					Main.recado();
+				}
+			}
+
+			System.out.println("");
 			System.out.println("Foi adicionado um gato");
 			return animal;
 		}
 	}
+
+	/**
+	 * @author Rafael
+	 * 
+	 * Método para a impressão de todos animais com a base ordenação definida nas classes Cachorro e Gato (compareTo).
+	 */
 	
-	public static void imprimirAnimais (List<Animal> lista) {
+	public static void imprimirAnimais(List<Animal> lista) {
 		Collections.sort(lista);
 		lista.forEach(animal -> System.out.println(animal));
+	}
+
+	/**
+	 * @author Rafael
+	 * 
+	 * Método apenas para imprimir uma frase.
+	 */
+	
+	public static void recado() {
+		System.out.println("Por favor, siga as instruções.");
 	}
 }

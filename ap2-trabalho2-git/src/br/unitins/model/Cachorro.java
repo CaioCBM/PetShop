@@ -18,12 +18,12 @@ public class Cachorro extends Animal {
 	//OVERRIDES
 	@Override
 	public String toString() {
-		return super.toString() + " - Animal: " + getClass().getSimpleName();
+		return super.toString() + " - Animal: " + getClass().getSimpleName() + "]";
 	}
 	
 	@Override
 	public int compareTo(Animal outroAnimal) {
-		return this.getNome().compareTo(outroAnimal.getNome());
+		return getDono().getNome().compareTo(outroAnimal.getDono().getNome());
 	}
 	
 }
