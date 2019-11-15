@@ -11,6 +11,14 @@ import br.unitins.model.Dono;
 import br.unitins.model.Gato;
 import br.unitins.model.Sexo;
 
+/**
+ * @author Rafael
+ *
+ *         1. Adicionar Animal (Completo) 2. Imprimir Animal (Completo) 3.
+ *         Deletar Animal 4. Alterar Animal
+ *
+ */
+
 public class Main {
 
 //	USUÁRIOS
@@ -30,13 +38,24 @@ public class Main {
 		Animal a3 = new Gato("Nana", new Dono("Lisa"), Sexo.FEMEA, 5);
 		Animal a4 = new Cachorro("Dudu", new Dono("Lisa"), Sexo.MACHO, 1);
 		Animal a5 = new Gato("Suzie", new Dono("Rafael"), Sexo.FEMEA, 2);
+		Animal a6 = new Gato("Felps", new Dono("Rafael"), Sexo.MACHO, 2);
+		Animal a7 = new Gato("Rey", new Dono("Caio"), Sexo.FEMEA, 2);
+		Animal a8 = new Gato("Luke", new Dono("Caio"), Sexo.MACHO, 1);
+		Animal a9 = new Gato("Jessie", new Dono("Bento"), Sexo.FEMEA, 1);
+		Animal a10 = new Gato("Pitchula", new Dono("Lisa"), Sexo.FEMEA, 6);
 
 		List<Animal> animais = new ArrayList<Animal>();
+
 		animais.add(a1);
 		animais.add(a2);
 		animais.add(a3);
 		animais.add(a4);
 		animais.add(a5);
+		animais.add(a6);
+		animais.add(a7);
+		animais.add(a8);
+		animais.add(a9);
+		animais.add(a10);
 
 //		LOGIN
 		while (!login()) {
@@ -47,6 +66,8 @@ public class Main {
 		if (login == 1) {
 
 			while (opcao != 3) {
+				
+				Collections.sort(animais);
 				System.out.println("");
 				System.out.println("Menu para Anotherafael");
 				System.out.println("");
@@ -60,11 +81,10 @@ public class Main {
 				switch (opcao) {
 				case 1:
 
+					System.out.println(".: Adicionando um animal :.");
 					System.out.println("1 - Cachorro, 2 - Gato");
 					System.out.print("Escolha: ");
-					int tipo = scan.nextInt();
-					System.out.println("");
-					animais.add(Main.adicionarAnimal(tipo));
+					animais.add(Main.adicionarAnimal(scan.nextInt()));
 					break;
 
 				case 2:
@@ -77,6 +97,12 @@ public class Main {
 					System.out.println("Até mais, Anotherafael.");
 					break;
 
+				case 4:
+
+					System.out.println(".: Removendo um animal :.");
+					System.out.print("Escolha o id: ");
+					Main.deletarAnimal(animais, scan.nextInt());
+					break;
 				}
 
 			}
@@ -87,11 +113,11 @@ public class Main {
 
 	}
 
-/**
- * @author Rafael
- * 
- * Método que realiza o login do sistema. 
- */
+	/**
+	 * @author Rafael
+	 * 
+	 *         Método que realiza o login do sistema.
+	 */
 
 	public static Boolean login() {
 		System.out.print("Digite o usuário: ");
@@ -115,15 +141,14 @@ public class Main {
 	/**
 	 * @author Rafael
 	 * 
-	 * Método para criar um Dono a partir do Scanner.
+	 *         Método para criar um Dono a partir do Scanner.
 	 * 
-	 * 1. Evitar que seja registrado número no nome do Dono.
-	 * 2. Limitar a quantidade digitos (12) no cpf.
-	 * 3. Evitar que seja registrado letra no número de telefone.
-	 * 4. Adicionar um método para adicionar premium.
+	 *         1. Evitar que seja registrado número no nome do Dono. 2. Limitar a
+	 *         quantidade digitos (12) no cpf. 3. Evitar que seja registrado letra
+	 *         no número de telefone. 4. Adicionar um método para adicionar premium.
 	 * 
 	 */
-	
+
 	public static Dono adicionarDono() {
 		Dono dono = new Dono(scan.next());
 		return dono;
@@ -132,14 +157,15 @@ public class Main {
 	/**
 	 * @author Rafael
 	 * 
-	 * Método para criar um animal a partir do Scanner.
+	 *         Método para criar um animal a partir do Scanner.
 	 * 
-	 * 1. Evitar números no nome do animal e do dono.
-	 * 2. Evitar outros valores além de macho e fêmea. (COMPLETO)
-	 * 3. Jogar uma exception quando for instanciar a idade do Animal para caso o usuário digitar algo que não seja um número inteiro.
+	 *         1. Evitar números no nome do animal e do dono. 2. Evitar outros
+	 *         valores além de macho e fêmea. (COMPLETO) 3. Jogar uma exception
+	 *         quando for instanciar a idade do Animal para caso o usuário digitar
+	 *         algo que não seja um número inteiro.
 	 * 
 	 */
-	
+
 	public static Animal adicionarAnimal(int tipo) {
 
 		if (tipo == 1) {
@@ -162,9 +188,8 @@ public class Main {
 					Main.recado();
 				}
 			}
-
 			System.out.println("");
-			System.out.println("Foi adicionado um cachorro");
+			System.out.println("Cachorro adicionado com sucesso.");
 			return animal;
 		} else {
 			System.out.println("Nome do animal e do dono");
@@ -186,9 +211,8 @@ public class Main {
 					Main.recado();
 				}
 			}
-
 			System.out.println("");
-			System.out.println("Foi adicionado um gato");
+			System.out.println("Gato adicionado com sucesso.");
 			return animal;
 		}
 	}
@@ -196,20 +220,37 @@ public class Main {
 	/**
 	 * @author Rafael
 	 * 
-	 * Método para a impressão de todos animais com a base ordenação definida nas classes Cachorro e Gato (compareTo).
+	 * Método para remover um animal da lista.
+	 * 
+	 * 1. Lidar com a exception gerada ao colocar um index inexistente.
 	 */
 	
+	public static void deletarAnimal(List<Animal> lista, int indice) {
+		try {
+			lista.remove(indice - 1);
+			System.out.println("Foi removido com sucesso.");
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("Não existe animal registrado nesse endereço.");
+		}
+	}
+
+	/**
+	 * @author Rafael
+	 * 
+	 *         Método para a impressão de todos animais com a base de ordenação
+	 *         definida nas classes Cachorro e Gato (compareTo).
+	 */
+
 	public static void imprimirAnimais(List<Animal> lista) {
-		Collections.sort(lista);
 		lista.forEach(animal -> System.out.println(animal));
 	}
 
 	/**
 	 * @author Rafael
 	 * 
-	 * Método apenas para imprimir uma frase.
+	 *         Método apenas para imprimir uma frase.
 	 */
-	
+
 	public static void recado() {
 		System.out.println("Por favor, siga as instruções.");
 	}
