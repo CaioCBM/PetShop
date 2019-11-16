@@ -1,6 +1,6 @@
 package br.unitins.model;
 
-public abstract class Animal implements Comparable<Animal> {
+public abstract class Animal implements Impressao, Comparable<Animal> {
 	protected String nome;
 	protected Dono dono;
 	protected Sexo sexo;
@@ -31,7 +31,7 @@ public abstract class Animal implements Comparable<Animal> {
 	//OVERRIDE
 	@Override
 	public String toString() {
-		return "[Nome: " + getNome() + ", " + getSexo() + " - " + getDono();
+		return "[Nome: " + getNome() + ", " + getSexo() + " - Dono: " + getDono();
 	}
 	
 	@Override
@@ -72,5 +72,28 @@ public abstract class Animal implements Comparable<Animal> {
 		if (sexo != other.sexo)
 			return false;
 		return true;
+	}
+	
+	@Override
+	public void imprimirAnimais() {
+		System.out.println(toString());
+	}
+
+	@Override
+	public void imprimirDonos() {
+		System.out.println("[Dono: " + getDono() + " - Animal: " + getNome() + "]");
+	}
+
+	@Override
+	public void imprimirCachorros() {
+		System.out.println("[Animal: " + getNome() + "]");
+//		CONFERIR SE REALMENTE É VERDADEIRO A EXECUÇÃO.
+//		System.out.println("[Animal: " + getNome() + " - Espécie: " + getClass().getSimpleName() + "]");
+	}
+
+	public void imprimirGatos() {
+		System.out.println("[Animal: " +getNome() + "]");
+//		CONFERIR SE REALMENTE É VERDADEIRO A EXECUÇÃO.
+//		System.out.println("[Animal: " + getNome() + " - Espécie: " + getClass().getSimpleName() + "]");
 	}
 }

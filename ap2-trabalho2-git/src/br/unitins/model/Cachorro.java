@@ -41,6 +41,4 @@ public class Cachorro extends Animal {
 			return false;
 		return true;
 	}
-	
-	
 }

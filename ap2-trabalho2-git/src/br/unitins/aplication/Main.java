@@ -2,6 +2,7 @@ package br.unitins.aplication;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,7 +16,7 @@ import br.unitins.model.Sexo;
  * @author Rafael
  *
  *         1. Adicionar Animal (Completo) 2. Imprimir Animal (Completo) 3.
- *         Deletar Animal 4. Alterar Animal
+ *         Deletar Animal (Completo) 4. Alterar Animal
  *
  */
 
@@ -44,18 +45,18 @@ public class Main {
 		Animal a9 = new Gato("Jessie", new Dono("Bento"), Sexo.FEMEA, 1);
 		Animal a10 = new Gato("Pitchula", new Dono("Lisa"), Sexo.FEMEA, 6);
 
-		List<Animal> animais = new ArrayList<Animal>();
+		List<Animal> listAnimais = new ArrayList<Animal>();
 
-		animais.add(a1);
-		animais.add(a2);
-		animais.add(a3);
-		animais.add(a4);
-		animais.add(a5);
-		animais.add(a6);
-		animais.add(a7);
-		animais.add(a8);
-		animais.add(a9);
-		animais.add(a10);
+		listAnimais.add(a1);
+		listAnimais.add(a2);
+		listAnimais.add(a3);
+		listAnimais.add(a4);
+		listAnimais.add(a5);
+		listAnimais.add(a6);
+		listAnimais.add(a7);
+		listAnimais.add(a8);
+		listAnimais.add(a9);
+		listAnimais.add(a10);
 
 //		LOGIN
 		while (!login()) {
@@ -65,15 +66,16 @@ public class Main {
 		int opcao = 0;
 		if (login == 1) {
 
-			while (opcao != 3) {
-				
-				Collections.sort(animais);
+			while (opcao != 4) {
+
+				Collections.sort(listAnimais);
 				System.out.println("");
 				System.out.println("Menu para Anotherafael");
 				System.out.println("");
 				System.out.println("1 - Menu de Adições");
 				System.out.println("2 - Menu de Impressões");
-				System.out.println("3 - Sair");
+				System.out.println("3 - Menu de Deletar");
+				System.out.println("4 - Sair");
 				System.out.print("Escolha: ");
 				opcao = scan.nextInt();
 				System.out.println("");
@@ -84,27 +86,83 @@ public class Main {
 					System.out.println(".: Adicionando um animal :.");
 					System.out.println("1 - Cachorro, 2 - Gato");
 					System.out.print("Escolha: ");
-					animais.add(Main.adicionarAnimal(scan.nextInt()));
+					listAnimais.add(Main.adicionarAnimal(scan.nextInt()));
+					opcao = 0;
 					break;
 
 				case 2:
 
-					Main.imprimirAnimais(animais);
+					int opcaoImpressao = 0;
+					while (opcaoImpressao != 5) {
+
+						System.out.println("1 - Animais, 2 - Donos, 3 - Cachorros, 4 - Gatos, 5 - Sair");
+						System.out.print("Escolha: ");
+						opcaoImpressao = scan.nextInt();
+						System.out.println("");
+
+						switch (opcaoImpressao) {
+						case 1:
+
+							Main.imprimirAnimais(listAnimais);
+							System.out.println("");
+							opcaoImpressao = 0;
+							break;
+
+						case 2:
+
+							listAnimais.sort((new Comparator<Animal>() {
+								@Override
+								public int compare(Animal animal, Animal outroAnimal) {
+									return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
+								}
+							}));
+							Main.imprimirDonos(listAnimais);
+							Collections.sort(listAnimais);
+							System.out.println("");
+							opcaoImpressao = 0;
+							break;
+
+						case 3:
+
+							Main.imprimirCachorros(listAnimais);
+							System.out.println("");
+							opcaoImpressao = 0;
+							break;
+
+						case 4:
+
+							Main.imprimirGatos(listAnimais);
+							System.out.println("");
+							opcaoImpressao = 0;
+							break;
+
+						case 5:
+
+							System.out.println(".:AVISO: Saindo da Impressão :.");
+							break;
+
+						default:
+
+							System.out.println("AVISO: Não existe essa opção");
+							opcaoImpressao = 0;
+							break;
+						}
+					}
 					break;
 
 				case 3:
 
-					System.out.println("Até mais, Anotherafael.");
+					System.out.println(".: Removendo um animal :.");
+					System.out.print("Escolha o id: ");
+					Main.deletarAnimal(listAnimais, scan.nextInt());
+					opcao = 0;
 					break;
 
 				case 4:
 
-					System.out.println(".: Removendo um animal :.");
-					System.out.print("Escolha o id: ");
-					Main.deletarAnimal(animais, scan.nextInt());
+					System.out.println("AVISO: Até mais, Anotherafael.");
 					break;
 				}
-
 			}
 
 		} else if (login == 2) {
@@ -126,15 +184,15 @@ public class Main {
 		String senha = scan.next();
 
 		if (usuario.equals(usuario1) && senha.equals(senha1)) {
-			System.out.println("Login autorizado!");
+			System.out.println("AVISO: Login autorizado!");
 			login = 1;
 			return true;
 		} else if (usuario.equals(usuario2) && senha.equals(senha2)) {
-			System.out.println("Login autorizado!");
+			System.out.println("AVISO: Login autorizado!");
 			login = 2;
 			return true;
 		}
-		System.out.println("Login não autorizado.");
+		System.out.println("AVISO: Login não autorizado.");
 		return false;
 	}
 
@@ -189,7 +247,7 @@ public class Main {
 				}
 			}
 			System.out.println("");
-			System.out.println("Cachorro adicionado com sucesso.");
+			System.out.println("AVISO: Cachorro adicionado com sucesso.");
 			return animal;
 		} else {
 			System.out.println("Nome do animal e do dono");
@@ -212,7 +270,7 @@ public class Main {
 				}
 			}
 			System.out.println("");
-			System.out.println("Gato adicionado com sucesso.");
+			System.out.println("AVISO: Gato adicionado com sucesso.");
 			return animal;
 		}
 	}
@@ -220,29 +278,49 @@ public class Main {
 	/**
 	 * @author Rafael
 	 * 
-	 * Método para remover um animal da lista.
+	 *         Método para remover um animal da lista.
 	 * 
-	 * 1. Lidar com a exception gerada ao colocar um index inexistente.
+	 *         1. Lidar com a exception gerada ao colocar um index inexistente.
+	 *         (Completo)
 	 */
-	
+
 	public static void deletarAnimal(List<Animal> lista, int indice) {
 		try {
 			lista.remove(indice - 1);
-			System.out.println("Foi removido com sucesso.");
+			System.out.println("AVISO: Foi removido com sucesso.");
 		} catch (IndexOutOfBoundsException e) {
-			System.out.println("Não existe animal registrado nesse endereço.");
+			System.out.println("AVISO: Não existe animal registrado nesse endereço.");
 		}
 	}
 
 	/**
 	 * @author Rafael
 	 * 
-	 *         Método para a impressão de todos animais com a base de ordenação
-	 *         definida nas classes Cachorro e Gato (compareTo).
+	 *         Método para a impressão de todos animais.
 	 */
 
 	public static void imprimirAnimais(List<Animal> lista) {
-		lista.forEach(animal -> System.out.println(animal));
+		lista.forEach(animal -> animal.imprimirAnimais());
+	}
+
+	public static void imprimirDonos(List<Animal> lista) {
+		lista.forEach(animal -> animal.imprimirDonos());
+	}
+
+	public static void imprimirCachorros(List<Animal> lista) {
+		lista.forEach(animal -> {
+			if (animal.getClass().getSimpleName().equals("Cachorro")) {
+				animal.imprimirCachorros();
+			}
+		});
+	}
+
+	public static void imprimirGatos(List<Animal> lista) {
+		lista.forEach(animal -> {
+			if (animal.getClass().getSimpleName().equals("Gato")) {
+				animal.imprimirCachorros();
+			}
+		});
 	}
 
 	/**
@@ -252,6 +330,6 @@ public class Main {
 	 */
 
 	public static void recado() {
-		System.out.println("Por favor, siga as instruções.");
+		System.out.println("AVISO: Por favor, siga as instruções.");
 	}
 }

@@ -2,5 +2,8 @@ package br.unitins.model;
 
 public interface Impressao {
 
-	public void imprimir();
+	public void imprimirAnimais();
+	public void imprimirDonos();
+	public void imprimirCachorros();
+	public void imprimirGatos();
 }
