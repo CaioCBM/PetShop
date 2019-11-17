@@ -34,16 +34,20 @@ public class Main {
 
 	public static void main(String[] args) {
 
-		Animal a1 = new Cachorro("Jonh", new Dono("Rafael"), Sexo.MACHO, 4);
-		Animal a2 = new Cachorro("Amanda", new Dono("Rafael"), Sexo.FEMEA, 2);
-		Animal a3 = new Gato("Nana", new Dono("Lisa"), Sexo.FEMEA, 5);
-		Animal a4 = new Cachorro("Dudu", new Dono("Lisa"), Sexo.MACHO, 1);
-		Animal a5 = new Gato("Suzie", new Dono("Rafael"), Sexo.FEMEA, 2);
-		Animal a6 = new Gato("Felps", new Dono("Rafael"), Sexo.MACHO, 2);
-		Animal a7 = new Gato("Rey", new Dono("Caio"), Sexo.FEMEA, 2);
-		Animal a8 = new Gato("Luke", new Dono("Caio"), Sexo.MACHO, 1);
-		Animal a9 = new Gato("Jessie", new Dono("Bento"), Sexo.FEMEA, 1);
-		Animal a10 = new Gato("Pitchula", new Dono("Lisa"), Sexo.FEMEA, 6);
+		Dono d1 = new Dono("Rafael", "111");
+		Dono d2 = new Dono("Lisa", "222");
+		Dono d3 = new Dono("Caio", "333");
+		
+		Animal a1 = new Cachorro("Jonh", d1, Sexo.MACHO, 4);
+		Animal a2 = new Cachorro("Amanda", d1, Sexo.FEMEA, 2);
+		Animal a3 = new Gato("Nana", d2, Sexo.FEMEA, 5);
+		Animal a4 = new Cachorro("Dudu", d3, Sexo.MACHO, 1);
+		Animal a5 = new Gato("Suzie", d1, Sexo.FEMEA, 2);
+		Animal a6 = new Gato("Felps", d1, Sexo.MACHO, 2);
+		Animal a7 = new Gato("Rey", d3, Sexo.FEMEA, 2);
+		Animal a8 = new Gato("Luke", d3, Sexo.MACHO, 1);
+		Animal a9 = new Gato("Jessie", d2, Sexo.FEMEA, 1);
+		Animal a10 = new Gato("Pitchula", d2, Sexo.FEMEA, 6);
 
 		List<Animal> listAnimais = new ArrayList<Animal>();
 
@@ -75,7 +79,7 @@ public class Main {
 				System.out.println("1 - Menu de Adições");
 				System.out.println("2 - Menu de Impressões");
 				System.out.println("3 - Menu de Deletar");
-				System.out.println("4 - Menu de Alteração");				
+				System.out.println("4 - Menu de Alteração");
 				System.out.println("5 - Sair");
 				System.out.print("Escolha: ");
 				opcao = scan.nextInt();
@@ -87,7 +91,10 @@ public class Main {
 					System.out.println(".: Adicionando um animal :.");
 					System.out.println("1 - Cachorro, 2 - Gato");
 					System.out.print("Escolha: ");
-					listAnimais.add(Main.adicionarAnimal(scan.nextInt()));
+					opcao = scan.nextInt();
+					Animal animal = Main.adicionarAnimal(listAnimais, opcao);
+
+					listAnimais.add(animal);
 					opcao = 0;
 					break;
 
@@ -160,13 +167,13 @@ public class Main {
 					Main.deletarAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
 					break;
-					
+
 				case 4:
 
 					Main.imprimirAnimais(listAnimais);
 					System.out.println("");
 					System.out.println(".: Alterando um animal :.");
-					System.out.println("Escolha o Id do Animal que busca mudar: ");
+					System.out.println("Escolha o ID do Animal que busca mudar: ");
 					Main.alterarAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
 					break;
@@ -183,8 +190,8 @@ public class Main {
 		}
 
 	}
-	
-	//METODOS
+
+	// METODOS
 
 	/**
 	 * @author Rafael
@@ -223,7 +230,8 @@ public class Main {
 	 */
 
 	public static Dono adicionarDono() {
-		Dono dono = new Dono(scan.next());
+		System.out.println("Nome e CPF do dono:");
+		Dono dono = new Dono(scan.next(), scan.next());
 		return dono;
 	}
 
@@ -239,11 +247,21 @@ public class Main {
 	 * 
 	 */
 
-	public static Animal adicionarAnimal(int tipo) {
+	public static Animal adicionarAnimal(List<Animal> lista, int tipo) {
 
 		if (tipo == 1) {
-			System.out.println("Nome do animal e do dono");
+			System.out.println("Nome do animal: ");
 			Animal animal = new Cachorro(scan.next(), Main.adicionarDono());
+
+			lista.forEach(animal2 -> {
+
+				if (	animal2.getDono().getCpf().equals(animal.getDono().getCpf())
+						&& !(animal2.getDono().getNome().equals(animal.getDono().getNome()))) {
+					System.out.println("AVISO: Já existe um Dono com esse CPF. (" + animal2.getDono().getNome() + ")");
+					System.out.print("Novo CPF: ");
+					animal.getDono().setCpf(scan.next());
+				}
+			});
 
 			for (int i = 0; i != 1;) {
 
@@ -315,7 +333,10 @@ public class Main {
 	 */
 
 	public static void imprimirAnimais(List<Animal> lista) {
-		lista.forEach(animal -> animal.imprimirAnimais());
+		System.out.println("Quantidade de Animais: " + lista.stream().count() + "\n");
+		lista.forEach(animal -> {
+			animal.imprimirAnimais();
+		});
 	}
 
 	public static void imprimirDonos(List<Animal> lista) {
@@ -323,6 +344,7 @@ public class Main {
 	}
 
 	public static void imprimirCachorros(List<Animal> lista) {
+		System.out.println(".: Cachorros :.");
 		lista.forEach(animal -> {
 			if (animal.getClass().getSimpleName().equals("Cachorro")) {
 				animal.imprimirCachorros();
@@ -331,6 +353,7 @@ public class Main {
 	}
 
 	public static void imprimirGatos(List<Animal> lista) {
+		System.out.println(".: Gatos :.");
 		lista.forEach(animal -> {
 			if (animal.getClass().getSimpleName().equals("Gato")) {
 				animal.imprimirCachorros();
@@ -342,51 +365,56 @@ public class Main {
 	 * @author Caio
 	 * 
 	 *         "Update". Alterando um componente.
+	 * 
+	 *         OBS: 1. Exception quando não tem o indice na lista. (Completo) 2.
+	 *         Exception quando digita valor diferente de número quando usa
+	 *         scan.nextInt(). 3.
+	 *
+	 *
 	 */
-	
+
 	public static void alterarAnimal(List<Animal> lista, int indice) {
 		try {
 			lista.get(indice);
-			System.out.println("Qual dos fatores do componente " 
-								+ indice + " você gostaria de mudar:");
+			System.out.println("Qual dos fatores do componente " + indice + " você gostaria de mudar:");
 			System.out.println("1 - NomeDoPet, 2 - Sexo, 3 - Dono");
 			int opcao = scan.nextInt();
-			
-			switch(opcao) {
+
+			switch (opcao) {
 			case 1:
 				System.out.println("Qual o novo nome do Pet?");
 				lista.get(indice - 1).setNome(scan.next());
 				System.out.println("Alterado Nome do Pet com sucesso!");
 				opcao = 0;
-	
+
 				break;
-		
+
 			case 2:
 				System.out.println("Definir o Sexo como 1 - MACHO ou 2 - FEMEA");
 				scan.nextInt();
-	
-				switch(opcao) {
-					case 1:
-						lista.get(indice - 1).setSexo(Sexo.MACHO);
-						System.out.println("Alterado Sexo do Pet para Macho com sucesso!");
-						opcao = 0;
 
-						break;
-					case 2:
-						lista.get(indice - 1).setSexo(Sexo.FEMEA);
-						System.out.println("Alterado Sexo do Pet para Fêmea com sucesso!");
-						opcao = 0;
-	
-						break;
+				switch (opcao) {
+				case 1:
+					lista.get(indice - 1).setSexo(Sexo.MACHO);
+					System.out.println("Alterado Sexo do Pet para Macho com sucesso!");
+					opcao = 0;
+
+					break;
+				case 2:
+					lista.get(indice - 1).setSexo(Sexo.FEMEA);
+					System.out.println("Alterado Sexo do Pet para Fêmea com sucesso!");
+					opcao = 0;
+
+					break;
 				}
 				opcao = 0;
-	
+
 				break;
 			case 3:
 				System.out.println("Qual o nome do Dono?");
-				lista.get(indice - 1).setDono(new Dono(scan.next()));
+				lista.get(indice - 1).setDono(Main.adicionarDono());
 				opcao = 0;
-	
+
 				break;
 			default:
 				System.out.println("AVISO: Escolha uma Opção de 1 a 3, por favor, babaca");
@@ -397,7 +425,7 @@ public class Main {
 			System.out.println("AVISO: Não existe animal registrado nesse endereço.");
 		}
 	}
-	
+
 	/**
 	 * @author Rafael
 	 * 

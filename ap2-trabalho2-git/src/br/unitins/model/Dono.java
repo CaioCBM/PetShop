@@ -7,8 +7,13 @@ public class Dono {
 	private Boolean premium;
 	
 	//CONSTRUTORES
-	public Dono (String nome) {
+//	public Dono (String nome) {
+//		this.nome = nome;
+//	}
+	
+	public Dono (String nome, String cpf) {
 		this.nome = nome;
+		this.cpf = cpf;
 	}
 	
 	public Dono(String nome, String cpf, String telefone, Boolean premium) {
@@ -21,6 +26,9 @@ public class Dono {
 	//GET E SET
 	public String getNome() {
 		return nome;
+	}
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
 	}
 	public String getCpf() {
 		return cpf;

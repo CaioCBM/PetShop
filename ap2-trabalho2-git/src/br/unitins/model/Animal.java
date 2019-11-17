@@ -43,7 +43,7 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 	//OVERRIDE
 	@Override
 	public String toString() {
-		return "[Nome: " + getNome() + ", " + getSexo() + " - Dono: " + getDono();
+		return "[Nome: " + getNome() + ", " + getSexo() + " - Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")";
 	}
 	
 	@Override
@@ -93,7 +93,7 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 
 	@Override
 	public void imprimirDonos() {
-		System.out.println("[Dono: " + getDono() + " - Animal: " + getNome() + "]");
+		System.out.println("[Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")" + " - Animal: " + getNome() + "]");
 	}
 
 	@Override
