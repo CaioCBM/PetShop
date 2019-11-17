@@ -66,7 +66,7 @@ public class Main {
 		int opcao = 0;
 		if (login == 1) {
 
-			while (opcao != 4) {
+			while (opcao != 5) {
 
 				Collections.sort(listAnimais);
 				System.out.println("");
@@ -75,7 +75,8 @@ public class Main {
 				System.out.println("1 - Menu de Adições");
 				System.out.println("2 - Menu de Impressões");
 				System.out.println("3 - Menu de Deletar");
-				System.out.println("4 - Sair");
+				System.out.println("4 - Menu de Alteração");				
+				System.out.println("5 - Sair");
 				System.out.print("Escolha: ");
 				opcao = scan.nextInt();
 				System.out.println("");
@@ -152,13 +153,25 @@ public class Main {
 
 				case 3:
 
+					Main.imprimirAnimais(listAnimais);
+					System.out.println("");
 					System.out.println(".: Removendo um animal :.");
 					System.out.print("Escolha o id: ");
 					Main.deletarAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
 					break;
-
+					
 				case 4:
+
+					Main.imprimirAnimais(listAnimais);
+					System.out.println("");
+					System.out.println(".: Alterando um animal :.");
+					System.out.println("Escolha o Id do Animal que busca mudar: ");
+					Main.alterarAnimal(listAnimais, scan.nextInt());
+					opcao = 0;
+					break;
+
+				case 5:
 
 					System.out.println("AVISO: Até mais, Anotherafael.");
 					break;
@@ -170,6 +183,8 @@ public class Main {
 		}
 
 	}
+	
+	//METODOS
 
 	/**
 	 * @author Rafael
@@ -323,6 +338,66 @@ public class Main {
 		});
 	}
 
+	/**
+	 * @author Caio
+	 * 
+	 *         "Update". Alterando um componente.
+	 */
+	
+	public static void alterarAnimal(List<Animal> lista, int indice) {
+		try {
+			lista.get(indice);
+			System.out.println("Qual dos fatores do componente " 
+								+ indice + " você gostaria de mudar:");
+			System.out.println("1 - NomeDoPet, 2 - Sexo, 3 - Dono");
+			int opcao = scan.nextInt();
+			
+			switch(opcao) {
+			case 1:
+				System.out.println("Qual o novo nome do Pet?");
+				lista.get(indice - 1).setNome(scan.next());
+				System.out.println("Alterado Nome do Pet com sucesso!");
+				opcao = 0;
+	
+				break;
+		
+			case 2:
+				System.out.println("Definir o Sexo como 1 - MACHO ou 2 - FEMEA");
+				scan.nextInt();
+	
+				switch(opcao) {
+					case 1:
+						lista.get(indice - 1).setSexo(Sexo.MACHO);
+						System.out.println("Alterado Sexo do Pet para Macho com sucesso!");
+						opcao = 0;
+
+						break;
+					case 2:
+						lista.get(indice - 1).setSexo(Sexo.FEMEA);
+						System.out.println("Alterado Sexo do Pet para Fêmea com sucesso!");
+						opcao = 0;
+	
+						break;
+				}
+				opcao = 0;
+	
+				break;
+			case 3:
+				System.out.println("Qual o nome do Dono?");
+				lista.get(indice - 1).setDono(new Dono(scan.next()));
+				opcao = 0;
+	
+				break;
+			default:
+				System.out.println("AVISO: Escolha uma Opção de 1 a 3, por favor, babaca");
+				System.out.println("By Rafael");
+				break;
+			}
+		} catch (IndexOutOfBoundsException e) {
+			System.out.println("AVISO: Não existe animal registrado nesse endereço.");
+		}
+	}
+	
 	/**
 	 * @author Rafael
 	 * 

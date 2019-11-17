@@ -12,8 +12,20 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 	}
 	
 	//GET E SET
+	
 	public String getNome() {
 		return nome;
+	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setDono(Dono dono) {
+		this.dono = dono;
+	}
+
+	public void setIdade(Integer idade) {
+		this.idade = idade;
 	}
 	public Dono getDono() {
 		return dono;
