@@ -488,7 +488,7 @@ public class Main {
 		try {
 			lista.get(indice);
 			System.out.println("Qual dos fatores do componente " + indice + " você gostaria de mudar:");
-			System.out.println("1 - NomeDoPet, 2 - Sexo, 3 - DonoNome, 4 - DonoCPF, 5 - DonoTelefone");
+			System.out.println("1 - NomeDoPet, 2 - Sexo, 3 - DonoNome, 4 - DonoCPF, 5 - DonoTelefone, 6 - DonoPremium");
 			int opcao = scan.nextInt();
 			
 			switch (opcao) {
@@ -621,6 +621,37 @@ public class Main {
 				case 2:
 					
 					System.out.println("Operação Cancelada com Sucesso");
+					opcao = 0;
+					break;
+				}
+				opcao = 0;
+				break;
+				
+			case 6:
+				
+				System.out.println("Qual o novo Status do Dono?");
+				System.out.println("1 - Premium, 2 - Não Premium, 3 - Cancelar");
+				opcao = scan.nextInt();
+				
+				switch(opcao) {
+				
+				case 1:
+					
+					lista.get(indice - 1).getDono().setPremium(true);
+					System.out.println("Alterado Status de Conta do Dono para PREMIUM com sucesso!");
+					opcao = 0;
+					break;
+					
+				case 2:
+					
+					lista.get(indice - 1).getDono().setPremium(false);
+					System.out.println("Alterado Status de Conta do Dono para NÃO PREMIUM com sucesso!");
+					opcao = 0;
+					break;
+					
+				case 3:
+					
+					System.out.println("Operação Cancelada com Sucesso!");
 					opcao = 0;
 					break;
 				}
