@@ -30,6 +30,9 @@ public class Dono {
 	public void setCpf(String cpf) {
 		this.cpf = cpf;
 	}
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
 	public String getCpf() {
 		return cpf;
 	}
@@ -40,9 +43,18 @@ public class Dono {
 		return premium;
 	}
 	
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public void setPremium(Boolean premium) {
+		this.premium = premium;
+	}
+
 	//OVERRIDE
 	@Override
 	public String toString() {
 		return getNome();
 	}
+
 }
