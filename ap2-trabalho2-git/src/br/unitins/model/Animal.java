@@ -11,6 +11,12 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 		
 	}
 	
+	public Animal (String nome, Integer idade, Dono dono) {
+		this.nome = nome;
+		this.idade = idade;
+		this.dono = dono;
+	}
+	
 	//GET E SET
 	
 	public String getNome() {
@@ -43,7 +49,7 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 	//OVERRIDE
 	@Override
 	public String toString() {
-		return "[Nome: " + getNome() + ", " + getSexo() + " - Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")";
+		return "[Nome: " + getNome() + " (Idade: " + getIdade() + "), " + getSexo() + " - Dono: " + getDono().getNome() + " (CPF: " + getDono().getCpf() + ", Tel: " + getDono().getTelefone()  + ")";
 	}
 	
 	@Override
@@ -93,7 +99,14 @@ public abstract class Animal implements Impressao, Comparable<Animal> {
 
 	@Override
 	public void imprimirDonos() {
-		System.out.println("[Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")" + " - Animal: " + getNome() + "]");
+		System.out.println("[Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")]");
+	}
+	
+	@Override
+	public void imprimirDonosPremium() {
+		if (getDono().getPremium()) {
+			System.out.println("[Dono: " + getDono().getNome() + " (CPF: " +getDono().getCpf() + ")]");
+		} 
 	}
 
 	@Override

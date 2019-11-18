@@ -11,16 +11,16 @@ public class Dono {
 //		this.nome = nome;
 //	}
 	
-	public Dono (String nome, String cpf) {
-		this.nome = nome;
-		this.cpf = cpf;
-	}
-	
-	public Dono(String nome, String cpf, String telefone, Boolean premium) {
+	public Dono (String nome, String cpf, String telefone, Boolean premium) {
 		this.nome = nome;
 		this.cpf = cpf;
 		this.telefone = telefone;
 		this.premium = premium;
+	}
+	public Dono (String nome, String cpf, String telefone) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.telefone = telefone;
 	}
 
 	//GET E SET
