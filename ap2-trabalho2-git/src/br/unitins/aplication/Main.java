@@ -96,7 +96,7 @@ public class Main {
 
 					Main.imprimirAnimais(listAnimais);
 					System.out.println("");
-					System.out.println(".: Removendo um animal :.");
+					System.out.println(".: Removendo um animal :. ");
 					System.out.print("Escolha o id (1 à " + listAnimais.size() + "): ");
 					Main.removerAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
