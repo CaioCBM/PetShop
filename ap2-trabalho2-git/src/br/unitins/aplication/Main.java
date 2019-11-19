@@ -15,10 +15,12 @@ import br.unitins.model.Sexo;
 /**
  * Classe Main, onde tudo será executado.
  *
- * AÇÕES: 1. Login de dois possíveis usuários. 2. Adicionar animais. 3. Excluir
- * animais. 4. Imprimir animais. 5. Alterar animais.
+ * AÇÕES: 1. Login de dois possíveis usuários. 
+ * 2. Adicionar animais. 
+ * 3. Excluir animais. 
+ * 4. Imprimir animais. 
+ * 5. Alterar animais.
  * 
- * @author Rafael e Caio
  */
 
 public class Main {
@@ -95,8 +97,8 @@ public class Main {
 					Main.imprimirAnimais(listAnimais);
 					System.out.println("");
 					System.out.println(".: Removendo um animal :.");
-					System.out.print("Escolha o id: ");
-					Main.deletarAnimal(listAnimais, scan.nextInt());
+					System.out.print("Escolha o id (1 à " + listAnimais.size() + "): ");
+					Main.removerAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
 					break;
 
@@ -105,7 +107,7 @@ public class Main {
 					Main.imprimirAnimais(listAnimais);
 					System.out.println("");
 					System.out.println(".: Alterando um animal :.");
-					System.out.println("Escolha o ID do Animal que busca mudar: ");
+					System.out.print("Escolha o ID (1 à " + listAnimais.size() + "): ");
 					Main.alterarAnimal(listAnimais, scan.nextInt());
 					opcao = 0;
 					break;
@@ -182,6 +184,7 @@ public class Main {
 							break;
 						}
 					}
+					opcao = 0;
 					break;
 
 				case 4:
@@ -478,7 +481,7 @@ public class Main {
 	 *	@param indice
 	 */
 
-	public static void deletarAnimal(List<Animal> lista, int indice) {
+	public static void removerAnimal(List<Animal> lista, int indice) {
 		
 		/**
 		 * Confere se ocorrerá uma IndexOutOfBoundsException (Index inexistente). E caso ocorra, lancará um aviso.
