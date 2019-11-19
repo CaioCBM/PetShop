@@ -21,6 +21,7 @@ import br.unitins.model.Sexo;
  * 4. Imprimir animais. 
  * 5. Alterar animais.
  * 
+ * @author Rafael e Caio
  */
 
 public class Main {
@@ -132,28 +133,14 @@ public class Main {
 
 						case 2:
 
-							listAnimais.sort((new Comparator<Animal>() {
-								@Override
-								public int compare(Animal animal, Animal outroAnimal) {
-									return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
-								}
-							}));
 							Main.imprimirDonos(listAnimais);
-							Collections.sort(listAnimais);
 							System.out.println("");
 							opcaoImpressao = 0;
 							break;
 
 						case 3:
 							
-							listAnimais.sort((new Comparator<Animal>() {
-								@Override
-								public int compare(Animal animal, Animal outroAnimal) {
-									return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
-								}
-							}));
 							Main.imprimirDonosPremium(listAnimais);
-							Collections.sort(listAnimais);
 							System.out.println("");
 							opcaoImpressao = 0;
 							break;
@@ -222,6 +209,11 @@ public class Main {
 					opcao = scan.nextInt();
 					Animal animal = Main.adicionarAnimal(listAnimais, opcao);
 
+					// Confere se o resultado retornado do animal foi null. Isso evita a exception NullPointerException.
+					if (animal == null) {
+						break;
+					}
+					
 					listAnimais.add(animal);
 					opcao = 0;
 					break;
@@ -256,28 +248,14 @@ public class Main {
 
 						case 2:
 
-							listAnimais.sort((new Comparator<Animal>() {
-								@Override
-								public int compare(Animal animal, Animal outroAnimal) {
-									return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
-								}
-							}));
 							Main.imprimirDonos(listAnimais);
-							Collections.sort(listAnimais);
 							System.out.println("");
 							opcaoImpressao = 0;
 							break;
 
 						case 3:
 							
-							listAnimais.sort((new Comparator<Animal>() {
-								@Override
-								public int compare(Animal animal, Animal outroAnimal) {
-									return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
-								}
-							}));
 							Main.imprimirDonosPremium(listAnimais);
-							Collections.sort(listAnimais);
 							System.out.println("");
 							opcaoImpressao = 0;
 							break;
@@ -326,8 +304,7 @@ public class Main {
 
 	/**
 	 *	Método que realiza o login do sistema.
-	 *	
-	 *	@author Rafael e Caio        
+	 *	      
 	 *	@return boolean
 	 */
 
@@ -353,7 +330,6 @@ public class Main {
 	/**
 	 * Método utilizado para criar um objeto do tipo Dono.
 	 * 
-	 * @author Rafael e Caio
 	 * @return Dono.
 	 */
 
@@ -383,7 +359,6 @@ public class Main {
 	/**
 	 *	Método para criar um animal a partir do Scanner.
 	 *
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 *	@param tipo
 	 *	@return Animal.
@@ -391,31 +366,29 @@ public class Main {
 
 	public static Animal adicionarAnimal(List<Animal> lista, int tipo) {
 
-		/**
-		 * Verificação de qual objeto criar: Cachorro (1) ou Gato (2).
-		 */
+		
+		 // Verificação de qual objeto criar: Cachorro (tipo = 1) ou Gato (tipo = 2).
 		if (tipo == 1) {
 			System.out.println("Nome e idade do animal: ");
 			Animal animal = new Cachorro(scan.next(), scan.nextInt(), Main.adicionarDono());
 
-			/**
-			 * Conferir se o CPF informado pelo usuário já existe em outro objeto. Caso tanto o nome quanto o cpf forem iguais
-			 * não impedirá de criar, mas se o nome distinguir, será pedido para alterar.
-			 */
+			
+			 // Conferir se o CPF informado pelo usuário já existe em outro objeto. Caso tanto o nome quanto o cpf forem iguais
+			 // não impedirá de criar, mas se o nome distinguir, será pedido para alterar.
 			lista.forEach(animal2 -> {
 
-				if (animal2.getDono().getCpf().equals(animal.getDono().getCpf())
-						&& !(animal2.getDono().getNome().equals(animal.getDono().getNome()))) {
-					System.out.println("AVISO: Já existe um Dono com esse CPF. (" + animal2.getDono().getNome() + ")");
-					System.out.print("Novo CPF: ");
-					animal.getDono().setCpf(scan.next());
+				if (animal2.getDono().getCpf().equals(animal.getDono().getCpf())) {
+					if (!(animal2.getDono().getNome().equals(animal.getDono().getNome()))) {
+						System.out.println("AVISO: Já existe um Dono com esse CPF. (" + animal2.getDono().getNome() + ")");
+						System.out.print("Novo CPF: ");
+						animal.getDono().setCpf(scan.next());
+					}
 				}
 			});
 
-			/**
-			 * Definir se o animal é macho ou fêmea. É necessário que o usuário siga com afinco a instrução, pois se usar maiusculo ou
-			 * esquecer o acento, dará como errado.
-			 */
+			
+			 // Definir se o animal é macho ou fêmea. É necessário que o usuário siga com afinco a instrução, pois se usar maiusculo ou
+			 // esquecer o acento, dará como errado.
 			for (int i = 0; i != 1;) {
 
 				System.out.println("Sexo: macho ou fêmea?");
@@ -436,17 +409,18 @@ public class Main {
 			System.out.println("");
 			System.out.println("AVISO: Cachorro adicionado com sucesso.");
 			return animal;
-		} else {
+		} else if (tipo == 2){
 			System.out.println("Nome e idade do animal: ");
 			Animal animal = new Gato(scan.next(), scan.nextInt(), Main.adicionarDono());
 
 			lista.forEach(animal2 -> {
 
-				if (animal2.getDono().getCpf().equals(animal.getDono().getCpf())
-						&& !(animal2.getDono().getNome().equals(animal.getDono().getNome()))) {
-					System.out.println("AVISO: Já existe um Dono com esse CPF. (" + animal2.getDono().getNome() + ")");
-					System.out.print("Novo CPF: ");
-					animal.getDono().setCpf(scan.next());
+				if (animal2.getDono().getCpf().equals(animal.getDono().getCpf())) {
+					if (!(animal2.getDono().getNome().equals(animal.getDono().getNome()))) {
+						System.out.println("AVISO: Já existe um Dono com esse CPF. (" + animal2.getDono().getNome() + ")");
+						System.out.print("Novo CPF: ");
+						animal.getDono().setCpf(scan.next());
+					}
 				}
 			});
 			
@@ -470,22 +444,23 @@ public class Main {
 			System.out.println("");
 			System.out.println("AVISO: Gato adicionado com sucesso.");
 			return animal;
+		} else {
+			Main.recado();
+			return null;
 		}
 	}
 
 	/**
 	 *	Método para remover um animal da lista.
 	 *         
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 *	@param indice
 	 */
 
 	public static void removerAnimal(List<Animal> lista, int indice) {
 		
-		/**
-		 * Confere se ocorrerá uma IndexOutOfBoundsException (Index inexistente). E caso ocorra, lancará um aviso.
-		 */
+		
+		// Confere se ocorrerá uma IndexOutOfBoundsException (Index inexistente). E caso ocorra, lancará um aviso.
 		try {
 			lista.remove(indice - 1);
 			System.out.println("AVISO: Foi removido com sucesso.");
@@ -497,7 +472,6 @@ public class Main {
 	/**
 	 *	Método para a impressão de todos animais.
 	 *	
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 */
 
@@ -511,29 +485,41 @@ public class Main {
 	/**
 	 *	Método para a impressão dos Donos e seus respectivos animais.
 	 *	
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 */
 	
 	public static void imprimirDonos(List<Animal> lista) {
+		lista.sort((new Comparator<Animal>() {
+			@Override
+			public int compare(Animal animal, Animal outroAnimal) {
+				return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
+			}
+		}));
 		lista.forEach(animal -> animal.imprimirDonos());
+		Collections.sort(lista);
 	}
 	
 	/**
 	 * Método para impessão de somente Donos que são premium.
 	 * 
-	 * @author Rafael e Caio
 	 * @param lista
 	 */
 	
 	public static void imprimirDonosPremium(List<Animal> lista) {
+		
+		lista.sort((new Comparator<Animal>() {
+			@Override
+			public int compare(Animal animal, Animal outroAnimal) {
+				return animal.getDono().getNome().compareTo(outroAnimal.getDono().getNome());
+			}
+		}));
 		lista.forEach(animal -> animal.imprimirDonosPremium());
+		Collections.sort(lista);
 	}
 
 	/**
 	 *	Método para a impressão de somente Cachorros
 	 *	
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 */
 	
@@ -549,7 +535,6 @@ public class Main {
 	/**
 	 *	Método para a impressão de somente Gatos.
 	 *	
-	 *	@author Rafael e Caio
 	 *	@param lista
 	 */
 	
@@ -565,7 +550,6 @@ public class Main {
 	/**
 	 * Método para alterar informações contidas na lista de animais.
 	 * 
-	 * @author Rafael e Caio
 	 * @param lista
 	 * @param indice
 	 */
@@ -646,7 +630,6 @@ public class Main {
 			case 1:
 
 				lista.get(indice - 1).getDono().setNome(nomeTemp);
-				;
 				System.out.println("Alterado Nome do Dono com sucesso!");
 				opcao = 0;
 				break;
@@ -673,7 +656,7 @@ public class Main {
 			switch (opcao) {
 
 			case 1:
-
+				
 				lista.get(indice - 1).getDono().setCpf(nomeTemp);
 				System.out.println("Alterado CPF do Dono com sucesso!");
 				opcao = 0;
